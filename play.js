@@ -7,6 +7,6 @@ const person = {
     };
     
 const hobbies = ['Sports', 'Cooking'];
-hobbies.push('Programming');
+const copiedArr =[hobbies];
 
-console.log(hobbies);
+console.log(copiedArr);
