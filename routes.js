@@ -24,11 +24,11 @@ const requestHandler = (req, res) => {
             fs.writeFile('message.txt', message, (err) => {
                 res.statusCode = 302;
                 res.setHeader('Location', '/');
-                return res.end();        
+                return res.end();
             });
         });
     }
-    
+
     res.setHeader('Content-Type', 'text/html');
     res.write('<html>');
     res.write('<head><title>My First Page</title></head>');
@@ -38,4 +38,4 @@ const requestHandler = (req, res) => {
 };
 
 exports.handler = requestHandler;
-exports.someText = 'Some hard coded text';
+exports.someText = 'Some hard coded text!!';
