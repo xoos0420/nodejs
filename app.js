@@ -1,13 +1,19 @@
 // core module
 const http = require('http');
-
-// 사용자 지정 파일
-const routes = require('./routes')
-
-console.log(routes.someText);
-
+const express = require('express');
+const app = express();
 
 // 서버 생성
-const server = http.createServer(routes.handler);
+app.use((req, res, next) => {
+    console.log('In the middleware!');
+    next(); // Allow the request to continue to the next middleware in line
+})
+
+app.use((req, res, next) => {
+    console.log('Another middleware!')
+    res.send('<h1>Hello from Express</h1>')
+})
+
+const server = http.createServer(app);
 
 server.listen(3000);
