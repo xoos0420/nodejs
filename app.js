@@ -1,14 +1,23 @@
 const http = require('http');
-const routes = require('./routes');
+const bodyParser = require('body-parser');
 
-console.log(routes.someText);
+const express = require('express');
 
-//create server 1
-// function rqListener(req ,res) {
+const app = express();
 
-// }
+app.use(bodyParser.urlencoded({extended: true}));
 
-// create server 2
-const server = http.createServer(routes.handler);
+app.use('/add-product', (req, res, next) => {
+    res.send('<form action="/product" method="POST"><input type="text" name="title"><button type="submit">Add Product</button></form>');
+});
 
-server.listen(3000);
+app.post('/product', (req, res, next) => {
+    console.log(req.body);
+    res.redirect('/');
+})
+
+app.use('/', (req, res, next) => {
+    res.send("<h1>Hello from Expresss!</h1>")
+});
+
+app.listen(3000);
