@@ -7,17 +7,20 @@ const express = require('express');
 
 const app = express();
 
-const adminRouter = require('./routes/admin.js')
+app.set('view engine', 'pug');
+app.set('views', 'views');
+
+const adminData = require('./routes/admin.js')
 const shopRouter = require('./routes/shop.js')
 
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public', )));
 
-app.use('/admin', adminRouter);
+app.use('/admin', adminData.routes);
 app.use(shopRouter);
 
 app.use((req, res, next) => {
-    res.sendFile(path.join(__dirname, 'views', '404.html'))
+    res.status(404).render('404', {pageTitle: 'Error'})
 })
 
 app.listen(3000);
