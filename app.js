@@ -1,3 +1,5 @@
+const path = require('path')
+
 const http = require('http');
 const bodyParser = require('body-parser');
 
@@ -5,19 +7,17 @@ const express = require('express');
 
 const app = express();
 
+const adminRouter = require('./routes/admin.js')
+const shopRouter = require('./routes/shop.js')
+
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/add-product', (req, res, next) => {
-    res.send('<form action="/product" method="POST"><input type="text" name="title"><button type="submit">Add Product</button></form>');
-});
+app.use('/admin', adminRouter);
+app.use(shopRouter);
 
-app.post('/product', (req, res, next) => {
-    console.log(req.body);
-    res.redirect('/');
+app.use((req, res, next) => {
+    res.sendFile(path.join(__dirname, 'views', '404.html'))
 })
-
-app.use('/', (req, res, next) => {
-    res.send("<h1>Hello from Expresss!</h1>")
-});
 
 app.listen(3000);
